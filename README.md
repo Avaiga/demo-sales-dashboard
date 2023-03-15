@@ -19,7 +19,7 @@ Taipy is a  low-code Python library for creating Business Applications. More inf
 
 [Demo Sales Dashboard](https://github.com/Avaiga/demo-sales-dashboard) demonstrates how Taipy can be used to read an Excel file and show interesting results.
 
-An Excel can be found in the [data](/data) folder. It will the base of our DataViz application. The user can filter it based on city, customer, and gender. This allows users to see metrics specific to certain groups of people or locations. For example, a user can filter the data to see sales metrics for customers in a particular city or sales metrics depending on gender.
+An Excel can be found in the [data](/src/data) folder. It will the base of our DataViz application. The user can filter it based on city, customer, and gender. This allows users to see metrics specific to certain groups of people or locations. For example, a user can filter the data to see sales metrics for customers in a particular city or sales metrics depending on gender.
 
 The app can display metrics such as total sales, average rating, and average sales per transaction. Users can also view charts that show sales by hour or sales by product. These charts can help users identify trends and patterns in the data.
 
