@@ -82,11 +82,13 @@ def filter(city, customer_type, gender):
     df_selection = df[df["City"].isin(city) & df["Customer_type"].isin(customer_type) & df["Gender"].isin(gender)]
 
     # SALES BY PRODUCT LINE [BAR CHART]
-    sales_by_product_line = df_selection.groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
+    sales_by_product_line = df_selection[["Product line", "Total"]].groupby(by=["Product line"])\
+                                                                   .sum()[["Total"]]\
+                                                                   .sort_values(by="Total")
     sales_by_product_line['index'] = sales_by_product_line.index
 
     # SALES BY HOUR [BAR CHART]
-    sales_by_hour = df_selection.groupby(by=["hour"]).sum()[["Total"]]
+    sales_by_hour = df_selection[["hour", "Total"]].groupby(by=["hour"]).sum()[["Total"]]
     sales_by_hour['index'] = sales_by_hour.index
     return df_selection, sales_by_product_line, sales_by_hour
 
