@@ -73,7 +73,7 @@ page = """<|toggle|theme|>
 |main_page>
 |>
 
-Code from [Coding is Fun](https://www.youtube.com/watch?v=Sb0A9i6d320&t=797s)
+Code from [Coding is Fun](https://github.com/Sven-Bo)
 
 Get the Taipy Code [here](https://github.com/Avaiga/demo-sales-dashboard) and the original code [here](https://github.com/Sven-Bo/streamlit-sales-dashboard)
 """
