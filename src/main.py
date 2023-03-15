@@ -23,12 +23,11 @@ customer_type = types
 gender = genders
 
 layout = {"margin":{"l":150}}
-show = True
 page = """
-<|toggle|theme|>
 
-<|{show}|pane|persistent=True|
-## Please filter here:
+<|layout|columns=20 80|gap=30px|
+<|part|
+## Please **filter**{: .orange} here:
 
 <|{city}|selector|lov={cities}|multiple|label=Select the City|dropdown|on_change=filter_data|width=100%|>
 
@@ -37,21 +36,22 @@ page = """
 <|{gender}|selector|lov={genders}|multiple|label=Select the Gender|dropdown|on_change=filter_data|width=100%|>
 |>
 
-# 📊 Sales Dashboard
+<|
+# 📊 **Sales**{: .orange} Dashboard
 
 <|layout|columns=1 1 1|
 <total_sales|
-### Total sales:
+### **Total**{: .orange} sales:
 US $ <|{int(df_selection["Total"].sum())}|>
 |total_sales>
 
 <average_rating|
-### Average Rating:
+### **Average**{: .orange} Rating:
 <|{round(df_selection["Rating"].mean(), 1)}|> <|{"⭐" * int(round(round(df_selection["Rating"].mean(), 1), 0))}|>
 |average_rating>
 
 <average_sale|
-### Average Sales Per Transaction:
+### Average Sales Per **Transaction**{: .orange}:
 US $ <|{round(df_selection["Total"].mean(), 2)}|>
 |average_sale>
 |>
@@ -63,6 +63,10 @@ US $ <|{round(df_selection["Total"].mean(), 2)}|>
 
 <|{sales_by_product_line}|chart|x=Total|y=index|type=bar|orientation=h|title=Sales by product|layout={layout}|>
 |charts>
+|>
+|>
+
+<|toggle|theme|>
 
 """
 
@@ -81,16 +85,16 @@ def filter_data(state):
     print("End filter_data")
 
 
-df_selection = df[df["City"].isin(city) & df["Customer_type"].isin(customer_type) & df["Gender"].isin(gender)]
+if __name__ == "__main__":
+    df_selection = df[df["City"].isin(city) & df["Customer_type"].isin(customer_type) & df["Gender"].isin(gender)]
 
+    # SALES BY PRODUCT LINE [BAR CHART]
+    sales_by_product_line = df_selection.groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
+    sales_by_product_line['index'] = sales_by_product_line.index
 
-# SALES BY PRODUCT LINE [BAR CHART]
-sales_by_product_line = df_selection.groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
-sales_by_product_line['index'] = sales_by_product_line.index
+    # SALES BY HOUR [BAR CHART]
+    sales_by_hour = df_selection.groupby(by=["hour"]).sum()[["Total"]]
+    sales_by_hour['index'] = sales_by_hour.index
 
-# SALES BY HOUR [BAR CHART]
-sales_by_hour = df_selection.groupby(by=["hour"]).sum()[["Total"]]
-sales_by_hour['index'] = sales_by_hour.index
-
-Gui(page).run(host="0.0.0.0", port=4006)
+    Gui(page).run(dark_mode=False, port=5001)
 
