@@ -15,12 +15,15 @@ The logic and idea as well as part of the code of this application comes from Sv
 
 ## What is demo Sales Dashboard
 
-Taipy is a Python library for creating Business Applications. More information on our
-[website](https://www.taipy.io).
+Taipy is a  low-code Python library for creating Business Applications. More information on our [website](https://www.taipy.io).
 
-[Demo Sales Dashboard](https://github.com/Avaiga/demo-sales-dashboard) is an application showing how Taipy Gui can build a minimalist but powerful application.
-This demo shows the fundamental mathematical optimization problem of “Sales Dashboard”. The goal is to minimize costs while fulfilling product demand and satisfying capacity constraints.
-Some of the constraints can be modified, resulting in different scenarios. For each scenario, different graphical representations are provided. 
+[Demo Sales Dashboard](https://github.com/Avaiga/demo-sales-dashboard) demonstrates how Taipy can be used to read an Excel file and show interesting results.
+
+An Excel can be found in the [data](/data) folder. It will the base of our DataViz application. The user can filter it based on city, customer, and gender. This allows users to see metrics specific to certain groups of people or locations. For example, a user can filter the data to see sales metrics for customers in a particular city or sales metrics depending on gender.
+
+The app can display metrics such as total sales, average rating, and average sales per transaction. Users can also view charts that show sales by hour or sales by product. These charts can help users identify trends and patterns in the data.
+
+Overall, Taipy's Excel-based app creation feature allows users to quickly and easily create an app that displays important metrics and charts from their Excel data. The ability to filter the data by various criteria makes it easy to gain insights and make informed decisions based on the data.
 
 ### Demo Type
 - **Level**: Basic
