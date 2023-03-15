@@ -2,7 +2,6 @@ import pandas as pd
 from taipy import Gui
 
 # ---- READ EXCEL ----
-
 df = pd.read_excel(
     io="data/supermarkt_sales.xlsx",
     engine="openpyxl",
@@ -100,11 +99,13 @@ def on_filter(state):
 
 
 if __name__ == "__main__":
+    # initialize dataframes
     df_selection,\
     sales_by_product_line,\
     sales_by_hour = filter(city,
                            customer_type,
                            gender)
 
-    Gui(page).run(dark_mode=False, port=5001)
+    # run the app
+    Gui(page).run()
 
