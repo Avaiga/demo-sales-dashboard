@@ -23,7 +23,7 @@ An Excel can be found in the [data](/src/data) folder. It will the base of our D
 
 The app can display metrics such as total sales, average rating, and average sales per transaction. Users can also view charts that show sales by hour or sales by product. These charts can help users identify trends and patterns in the data.
 
-Overall, Taipy's Excel-based app creation feature allows users to quickly and easily create an app that displays important metrics and charts from their Excel data. The ability to filter the data by various criteria makes it easy to gain insights and make informed decisions based on the data.
+Overall, this demo of Excel-based app creation allows users to quickly and easily create an app that displays important metrics and charts from their Excel data. The ability to filter the data by various criteria makes it easy to gain insights and make informed decisions based on the data.
 
 ### Demo Type
 - **Level**: Basic
