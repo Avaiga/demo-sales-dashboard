@@ -17,13 +17,12 @@ The logic and idea as well as part of the code of this application comes from Sv
 
 Taipy is a  low-code Python library for creating Business Applications. More information on our [website](https://www.taipy.io).
 
-[Demo Sales Dashboard](https://github.com/Avaiga/demo-sales-dashboard) demonstrates how Taipy can be used to read an Excel file and show interesting results.
+[Demo Sales Dashboard](https://github.com/Avaiga/demo-sales-dashboard) demonstrates how Taipy can read an Excel file and show interesting results. This will the base of our DataViz application. The user can filter it based on city, customer, and gender. This allows users to see metrics specific to certain groups of people or locations. For example, one's can view the data to see sales metrics for customers in a particular city or sales metrics depending on gender.
 
-An Excel can be found in the [data](/src/data) folder. It will the base of our DataViz application. The user can filter it based on city, customer, and gender. This allows users to see metrics specific to certain groups of people or locations. For example, a user can filter the data to see sales metrics for customers in a particular city or sales metrics depending on gender.
+Two charts are shown on the Web app: sales by hour or sales by product. These graphs can help users identify trends and patterns in the data.
 
-The app can display metrics such as total sales, average rating, and average sales per transaction. Users can also view charts that show sales by hour or sales by product. These charts can help users identify trends and patterns in the data.
+Overall, this demo of Excel-based app creation allows users to quickly and easily create an app that displays important metrics and charts from their Excel data. The ability to filter it by various criteria makes it easy to gain insights and make informed decisions.
 
-Overall, this demo of Excel-based app creation allows users to quickly and easily create an app that displays important metrics and charts from their Excel data. The ability to filter the data by various criteria makes it easy to gain insights and make informed decisions based on the data.
 
 ### Demo Type
 - **Level**: Basic
@@ -40,7 +39,7 @@ This demo works with a Python version superior to 3.8. Install the dependencies 
 
 
 - `src/`: Contains the demo source code.
-  - `src/data`: Contains the application data files.
+  - `src/data`: Contains the application data files. An Excel can be found here.
 - `docs/`: contains the images for the documentation
 - `CODE_OF_CONDUCT.md`: Code of conduct for members and contributors of _demo-sales-dashboard_.
 - `CONTRIBUTING.md`: Instructions to contribute to _demo-sales-dashboard_.
