@@ -22,12 +22,12 @@ city = cities
 customer_type = types
 gender = genders
 
-layout = {"margin":{"l":220}}
+layout = {"margin": {"l": 220}}
 
 # Markdown for the entire page
 ## NOTE: {: .orange} references a color from main.css use to style my text
 ## <text|
-## |text> 
+## |text>
 ## "text" here is just a name given to my part/my section
 ## it has no meaning in the code
 page = """<|toggle|theme|>
@@ -65,10 +65,14 @@ page = """<|toggle|theme|>
 
 <br/>
 
-<charts|
-<|{sales_by_hour}|chart|x=index|y=Total|type=bar|title=Sales by hour|color=#ff462b|>
+<|Sales Table|expandable|expanded=False|
+<|{df_selection}|table|width=100%|page_size=5|rebuild|class_name=table|>
+|>
 
-<|{sales_by_product_line}|chart|x=Total|y=index|type=bar|orientation=h|title=Sales by product|layout={layout}|color=#ff462b|>
+<charts|
+<|{sales_by_hour}|chart|x=Hour|y=Total|type=bar|title=Sales by Hour|color=#ff462b|>
+
+<|{sales_by_product_line}|chart|x=Total|y=Product|type=bar|orientation=h|title=Sales by Product|layout={layout}|color=#ff462b|>
 |charts>
 |main_page>
 |>
@@ -78,36 +82,42 @@ Code from [Coding is Fun](https://github.com/Sven-Bo)
 Get the Taipy Code [here](https://github.com/Avaiga/demo-sales-dashboard) and the original code [here](https://github.com/Sven-Bo/streamlit-sales-dashboard)
 """
 
+
 def filter(city, customer_type, gender):
-    df_selection = df[df["City"].isin(city) & df["Customer_type"].isin(customer_type) & df["Gender"].isin(gender)]
+    df_selection = df[
+        df["City"].isin(city)
+        & df["Customer_type"].isin(customer_type)
+        & df["Gender"].isin(gender)
+    ]
 
     # SALES BY PRODUCT LINE [BAR CHART]
-    sales_by_product_line = df_selection[["Product line", "Total"]].groupby(by=["Product line"])\
-                                                                   .sum()[["Total"]]\
-                                                                   .sort_values(by="Total")
-    sales_by_product_line['index'] = sales_by_product_line.index
+    sales_by_product_line = (
+        df_selection[["Product line", "Total"]]
+        .groupby(by=["Product line"])
+        .sum()[["Total"]]
+        .sort_values(by="Total")
+    )
+    sales_by_product_line["Product"] = sales_by_product_line.index
 
     # SALES BY HOUR [BAR CHART]
-    sales_by_hour = df_selection[["hour", "Total"]].groupby(by=["hour"]).sum()[["Total"]]
-    sales_by_hour['index'] = sales_by_hour.index
+    sales_by_hour = (
+        df_selection[["hour", "Total"]].groupby(by=["hour"]).sum()[["Total"]]
+    )
+    sales_by_hour["Hour"] = sales_by_hour.index
     return df_selection, sales_by_product_line, sales_by_hour
 
+
 def on_filter(state):
-    state.df_selection,\
-    state.sales_by_product_line,\
-    state.sales_by_hour = filter(state.city,
-                                 state.customer_type,
-                                 state.gender)
+    state.df_selection, state.sales_by_product_line, state.sales_by_hour = filter(
+        state.city, state.customer_type, state.gender
+    )
 
 
 if __name__ == "__main__":
     # initialize dataframes
-    df_selection,\
-    sales_by_product_line,\
-    sales_by_hour = filter(city,
-                           customer_type,
-                           gender)
+    df_selection, sales_by_product_line, sales_by_hour = filter(
+        city, customer_type, gender
+    )
 
     # run the app
     Gui(page).run()
-
