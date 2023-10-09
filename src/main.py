@@ -14,15 +14,11 @@ df = pd.read_excel(
 # Add 'Hour' column to dataframe
 df["Hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
 
+city = cities = list(df["City"].unique())
+customer_type = types = list(df["Customer_type"].unique())
+gender = genders = list(df["Gender"].unique())
 
-cities = list(df["City"].unique())
-types = list(df["Customer_type"].unique())
-genders = list(df["Gender"].unique())
-city = cities
-customer_type = types
-gender = genders
-
-layout = {"margin":{"l":150}}
+layout = {"margin": {"l": 220}}
 
 page = """
 <|toggle|theme|>
@@ -31,11 +27,11 @@ page = """
 <|sidebar|
 ## Please **filter**{: .color-primary} here:
 
-<|{city}|selector|lov={cities}|multiple|label=Select the City|dropdown|on_change=filter_data|class_name=fullwidth|>
+<|{city}|selector|lov={cities}|multiple|label=Select the City|dropdown|on_change=on_filter|class_name=fullwidth|>
 
-<|{customer_type}|selector|lov={types}|multiple|label=Select the Customer Type|dropdown|on_change=filter_data|class_name=fullwidth|>
+<|{customer_type}|selector|lov={types}|multiple|label=Select the Customer Type|dropdown|on_change=on_filter|class_name=fullwidth|>
 
-<|{gender}|selector|lov={genders}|multiple|label=Select the Gender|dropdown|on_change=filter_data|class_name=fullwidth|>
+<|{gender}|selector|lov={genders}|multiple|label=Select the Gender|dropdown|on_change=on_filter|class_name=fullwidth|>
 |>
 
 <main_page|
@@ -60,43 +56,60 @@ US $ <|{round(df_selection["Total"].mean(), 2)}|>
 
 <br/>
 
-<|Table|expandable|not expanded|
-<|{df_selection}|table|>
+<|Sales Table|expandable|not expanded|
+<|{df_selection}|table|page_size=5|>
 |>
 
 <|card p2|
-<|{sales_by_hour}|chart|x=Hour|y=Total|type=bar|title=Sales by hour|>
+<|{sales_by_hour}|chart|x=Hour|y=Total|type=bar|title=Sales by Hour|>
 
-<|{sales_by_product_line}|chart|x=Total|y=Product|type=bar|orientation=h|title=Sales by product|layout={layout}|>
+<|{sales_by_product_line}|chart|x=Total|y=Product line|type=bar|orientation=h|title=Sales by Product|layout={layout}|>
 |>
+
+Get the Taipy Code [here](https://github.com/Avaiga/demo-sales-dashboard) and the original code [here](https://github.com/Sven-Bo/streamlit-sales-dashboard)
 |main_page>
 |>
+
 """
 
-def filter_data(state):
-    state.df_selection = df[df["City"].isin(state.city) & df["Customer_type"].isin(state.customer_type) & df["Gender"].isin(state.gender)]
+
+def filter(city, customer_type, gender):
+    df_selection = df[
+        df["City"].isin(city)
+        & df["Customer_type"].isin(customer_type)
+        & df["Gender"].isin(gender)
+    ]
 
     # SALES BY PRODUCT LINE [BAR CHART]
-    sales_by_product_line = state.df_selection[['Product line', 'Total']].groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
-    sales_by_product_line['Product'] = sales_by_product_line.index
-    state.sales_by_product_line = sales_by_product_line
+    sales_by_product_line = (
+        df_selection[["Product line", "Total"]]
+        .groupby(by=["Product line"])
+        .sum()[["Total"]]
+        .sort_values(by="Total")
+    )
+    sales_by_product_line["Product line"] = sales_by_product_line.index
 
     # SALES BY HOUR [BAR CHART]
-    sales_by_hour = state.df_selection[['Hour', 'Total']].groupby(by=["Hour"]).sum()[["Total"]]
-    sales_by_hour['Hour'] = sales_by_hour.index
-    state.sales_by_hour = sales_by_hour
+    sales_by_hour = (
+        df_selection[["Hour", "Total"]].groupby(by=["Hour"]).sum()[["Total"]]
+    )
+    sales_by_hour["Hour"] = sales_by_hour.index
+    return df_selection, sales_by_product_line, sales_by_hour
 
 
-df_selection = df[df["City"].isin(city) & df["Customer_type"].isin(customer_type) & df["Gender"].isin(gender)]
+def on_filter(state):
+    if len(state.city) == 0 or len(state.customer_type) == 0 or len(state.gender) == 0:
+        notify(state, "Error", "No results found. Check the filters.")
+        return
+    
+    state.df_selection, state.sales_by_product_line, state.sales_by_hour = filter(
+        state.city, state.customer_type, state.gender
+    )
+    
 
 
-# SALES BY PRODUCT LINE [BAR CHART]
-sales_by_product_line = df_selection[['Product line', 'Total']].groupby(by=["Product line"]).sum()[["Total"]].sort_values(by="Total")
-sales_by_product_line['Product'] = sales_by_product_line.index
-
-# SALES BY HOUR [BAR CHART]
-sales_by_hour = df_selection[['Hour', 'Total']].groupby(by=["Hour"]).sum()[["Total"]]
-sales_by_hour['Hour'] = sales_by_hour.index
-
-Gui(page).run(margin="0em", title="Sales Dashboard")
-
+if __name__ == "__main__":
+    df_selection, sales_by_product_line, sales_by_hour = filter(
+        city, customer_type, gender
+    )
+    Gui(page).run(margin="0em", title="Sales Dashboard")
