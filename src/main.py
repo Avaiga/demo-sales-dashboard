@@ -98,5 +98,5 @@ sales_by_product_line['Product'] = sales_by_product_line.index
 sales_by_hour = df_selection[['Hour', 'Total']].groupby(by=["Hour"]).sum()[["Total"]]
 sales_by_hour['Hour'] = sales_by_hour.index
 
-Gui(page).run(margin="0em")
+Gui(page).run(margin="0em", title="Sales Dashboard")
 
