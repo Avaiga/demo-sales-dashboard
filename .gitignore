@@ -1,4 +1,6 @@
 src/.data
+src/.taipy
+src/user_data
 *.pyc
 src/login/login.json
 *.csv

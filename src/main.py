@@ -23,7 +23,7 @@ layout = {"margin": {"l": 220}}
 page = """
 <|toggle|theme|>
 
-<|25 75|layout|gap=30px|
+<|25 75|layout|gap=30px|columns[mobile]=50vw 1fr|
 <|sidebar|
 ## Please **filter**{: .color-primary} here:
 
