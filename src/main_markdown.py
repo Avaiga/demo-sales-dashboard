@@ -101,11 +101,10 @@ def on_filter(state):
     if len(state.city) == 0 or len(state.customer_type) == 0 or len(state.gender) == 0:
         notify(state, "Error", "No results found. Check the filters.")
         return
-    
+
     state.df_selection, state.sales_by_product_line, state.sales_by_hour = filter(
         state.city, state.customer_type, state.gender
     )
-    
 
 
 if __name__ == "__main__":

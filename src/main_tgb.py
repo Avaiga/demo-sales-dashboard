@@ -59,7 +59,7 @@ def on_filter(state):
 with tgb.Page() as page:
     tgb.toggle(theme=True)
 
-    with tgb.layout(columns="25 75", columns__mobile="50vw 1fr", gap="30px"):
+    with tgb.layout(columns="25 75", columns__mobile="1", gap="30px"):
         with tgb.part("sidebar"):
             tgb.text("## Please **filter** here:", mode="md")
 
@@ -80,7 +80,7 @@ with tgb.Page() as page:
                 label="Select the Customer Type",
                 dropdown=True,
                 on_change=on_filter,
-                class_name="fullwidth",
+                class_name="fullwidth mt1",
             )
 
             tgb.selector(
@@ -90,10 +90,10 @@ with tgb.Page() as page:
                 label="Select the Gender",
                 dropdown=True,
                 on_change=on_filter,
-                class_name="fullwidth",
+                class_name="fullwidth mt1",
             )
 
-        with tgb.part():
+        with tgb.part("m1"):
             tgb.text("# 📊 Sales **Dashboard**", mode="md")
 
             with tgb.layout(columns="1 1 1"):
