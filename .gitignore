@@ -5,7 +5,8 @@ src/user_data
 src/login/login.json
 *.csv
 *.zip
-Dockerfile
 .DS_Store
 benchmark
 .vscode
+*.lock
+*.gz

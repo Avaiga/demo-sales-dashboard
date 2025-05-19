@@ -32,7 +32,7 @@ Overall, this demo of Excel-based app creation allows users to quickly and easil
 
 ## How to run
 
-This demo works with a Python version superior to 3.8. Install the dependencies of the *requirements.txt* and run the *main.py*.
+This demo works with a Python version superior to 3.9. Install the dependencies of the *requirements.txt* and run the *main.py*.
 
 
 ## Directory Structure
